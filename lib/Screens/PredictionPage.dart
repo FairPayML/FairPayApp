@@ -52,7 +52,10 @@ class _PredictionState extends State<Prediction> {
               } else {
                 double predictedPrice = double.parse(price['response']);
                 predictedPrice = (predictedPrice * 100).round() / 100.0;
-                return Container(child: Text('Price Is $predictedPrice'));
+                return Container(
+                    child: Text(
+                  'Price Is $predictedPrice',
+                ));
               }
             }
           },

@@ -405,8 +405,9 @@ class _HomeState extends State<Home> {
                                 color: Color(0xffDAA210)),
                             width: MediaQuery.of(context).size.width,
                             child: Text('Check The Price',
-                                style:
-                                    GoogleFonts.poppins(color: Colors.white))),
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold))),
                       ),
                     ],
                   ),
