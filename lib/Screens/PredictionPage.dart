@@ -47,8 +47,10 @@ class _PredictionState extends State<Prediction> {
               );
             } else {
               if (snapshot.hasError) {
+                print(snapshot.error.toString());
                 return Container(
                   child: Text('Error Occured'),
+
                 );
               } else {
                 double predictedPrice = double.parse(price['response']);
@@ -160,6 +162,7 @@ class _PredictionState extends State<Prediction> {
                       Text(
                         'Price Is $predictedPrice',
                       ),
+                      Form(child: child)
                     ],
                   ),
                 );
