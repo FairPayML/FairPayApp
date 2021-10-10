@@ -162,7 +162,6 @@ class _PredictionState extends State<Prediction> {
                       Text(
                         'Price Is $predictedPrice',
                       ),
-                      Form(child: child)
                     ],
                   ),
                 );
