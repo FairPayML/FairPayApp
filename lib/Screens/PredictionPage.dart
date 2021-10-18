@@ -3,7 +3,9 @@ import 'package:fairpay/Networking/networkHelper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:get/get.dart';
+import 'package:slide_to_confirm/slide_to_confirm.dart';
 
+import 'package:fairpay/Widget/ConstantWidget.dart';
 class Prediction extends StatefulWidget {
   @override
   _PredictionState createState() => _PredictionState();
@@ -63,105 +65,51 @@ class _PredictionState extends State<Prediction> {
                 else
                   stops = '${arg[3]} stops';
                 return Container(
-                  padding: EdgeInsets.all(10),
+                  padding:EdgeInsets.all(10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                '${arg[0]}',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xffDAA210)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Image.asset('images/line.png'),
-                              Image.asset('images/plane.png')
-                            ],
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${arg[1]}',
-                              textAlign: TextAlign.right,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff4F755B)),
+                          DetailWidget(title: 'Origin Place',detail: arg[0],),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Arrival Place',detail: arg[1],),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Airline',detail: arg[2],),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Stops',detail: stops,),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Departure Time',detail: arg[4],),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Arrival Time',detail: arg[5],),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Departure Date',detail: arg[6],),
+                          SizedBox(height: 10,),
+                          DetailWidget(title: 'Arrival Date',detail: arg[7],),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          PricePredicted(title: 'Predicted Price',detail: predictedPrice.toString(),),
+                          SizedBox(height: 20,),
+                          ConfirmationSlider(
+                              onConfirmation: (){
+                                  Get.toNamed('/book');
+                                },
+                            backgroundColor: Color(0xffDAA210),
+                            backgroundColorEnd: Colors.yellowAccent,
+                            iconColor: Colors.yellowAccent,
+                            foregroundColor: Colors.yellow,
+
+                            text: "Slide to Book",
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w900
                             ),
                           )
                         ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              '${arg[4]}',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xffDAA210)),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${arg[5]}',
-                              textAlign: TextAlign.right,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff4F755B)),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              '${arg[6]}',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xffDAA210)),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${stops}',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff2F80ED)),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${arg[7]}',
-                              textAlign: TextAlign.right,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff4F755B)),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'Price Is $predictedPrice',
-                      ),
+                      )
                     ],
                   ),
                 );
@@ -175,3 +123,4 @@ class _PredictionState extends State<Prediction> {
     );
   }
 }
+
