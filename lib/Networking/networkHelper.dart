@@ -23,4 +23,24 @@ class NetworkHelper {
       print(response.statusCode);
     }
   }
+  Future getAccessToken()async{
+    var res=await http.post(Uri.parse(
+        "https://test.api.amadeus.com/v1/security/oauth2/token"),
+        body: {
+          "client_id":"rZwzUHHCfe6yZ5GW7XHXU0yRXaZOGXm4",
+          "client_secret":"1H9uz3aM9qBNxUeH",
+          "grant_type":"client_credentials"
+        },
+        headers: {
+          "Content-Type":"application/x-www-form-urlencoded"
+        }
+    );
+    if (res.statusCode == 200) {
+      String data = res.body;
+      return jsonDecode(data);
+    } else {
+      print("error in getting access token");
+      print(res.statusCode);
+    }
+  }
 }

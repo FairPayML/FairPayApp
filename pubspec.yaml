@@ -34,9 +34,12 @@ dependencies:
   loading_indicator: ^2.1.1
   google_fonts: ^2.1.0
   intl: ^0.17.0
+  json_annotation: ^4.3.0
   slide_to_confirm: ^1.1.0
 
 dev_dependencies:
+  build_runner:
+  json_serializable:
   flutter_test:
     sdk: flutter
 
