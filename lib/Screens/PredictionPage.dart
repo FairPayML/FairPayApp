@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fairpay/Networking/networkHelper.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:get/get.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
-
 import 'package:fairpay/Widget/ConstantWidget.dart';
+
 class Prediction extends StatefulWidget {
   @override
   _PredictionState createState() => _PredictionState();
@@ -94,13 +93,14 @@ class _PredictionState extends State<Prediction> {
                           SizedBox(height: 20,),
                           ConfirmationSlider(
                               onConfirmation: (){
-                                  Get.toNamed('/book');
+                                  Get.toNamed('/book',arguments: [
+                                    arg[0],arg[1],arg[2],arg[3],arg[4],arg[5],arg[6],arg[7],predictedPrice
+                                  ]);
                                 },
                             backgroundColor: Color(0xffDAA210),
                             backgroundColorEnd: Colors.yellowAccent,
                             iconColor: Colors.yellowAccent,
                             foregroundColor: Colors.yellow,
-
                             text: "Slide to Book",
                             textStyle: TextStyle(
                               color: Colors.white,

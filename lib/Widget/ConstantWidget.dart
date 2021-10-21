@@ -4,19 +4,39 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FlightWidget extends StatelessWidget {
   const FlightWidget({
-    Key? key,
-    required this.arg,
     required this.stops,
     required this.predictedPrice,
-  }) : super(key: key);
+    required this.dept,
+    required this.dest,
+    required this.deptDate,
+    required this.destDate,
+    required this.destTime,
+    required this.deptTime,
+  });
 
-  final arg;
   final String stops;
+  final String dept;
+  final String dest;
+  final String deptDate;
+  final String destDate;
+  final String destTime;
+  final String deptTime;
   final double predictedPrice;
 
   @override
   Widget build(BuildContext context) {
+    String stop = '';
+    if (stops == 'Non-Stop')
+      stop = 'Non-Stop';
+    else if (stops == '1')
+      stop = '1 stop';
+    else
+      stop = '$stops stops';
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.green,width: 2)
+      ),
       padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,15 +44,14 @@ class FlightWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                children: [
-                  Text(
-                    '${arg[0]}',
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xffDAA210)),
-                  ),
-                ],
+              Expanded(
+                child: Text(
+                  '$dept',
+                  style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xffDAA210)),
+                ),
               ),
               SizedBox(
                 width: 5,
@@ -49,10 +68,12 @@ class FlightWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '${arg[1]}',
+                  '$dest',
+
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                       color: Color(0xff4F755B)),
                 ),
               )
@@ -64,7 +85,7 @@ class FlightWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${arg[4]}',
+                  '$deptDate',
                   textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
@@ -73,7 +94,7 @@ class FlightWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '${arg[5]}',
+                  '$destDate',
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
@@ -86,7 +107,7 @@ class FlightWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${arg[6]}',
+                  '$deptTime',
                   textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
@@ -95,7 +116,7 @@ class FlightWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '${stops}',
+                  '$stop',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
@@ -104,7 +125,7 @@ class FlightWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '${arg[7]}',
+                  '$destTime',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
@@ -183,5 +204,44 @@ class PricePredicted extends StatelessWidget {
     );
   }
 }
+
+class AddPassenger extends StatelessWidget {
+  const AddPassenger({
+    required this.typePass,
+    required this.addFunction,
+    required this.subFunction
+  });
+  final int typePass;
+  final addFunction;
+  final subFunction;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap:addFunction,
+          child: CircleAvatar(
+            child: Icon(Icons.remove,color: Colors.black,),
+            backgroundColor: Colors.grey,
+          ),
+        ),
+        SizedBox(width: 5,),
+        Text('$typePass',style: TextStyle(
+            color: Colors.black,
+            fontSize: 20
+        ),),
+        SizedBox(width: 5,),
+        GestureDetector(
+          onTap:subFunction,
+          child: CircleAvatar(
+            child: Icon(Icons.add,color: Colors.black,),
+            backgroundColor: Colors.grey,
+          ),
+        )
+      ],
+    );
+  }
+}
+
 
 
