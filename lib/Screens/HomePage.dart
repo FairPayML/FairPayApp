@@ -1,5 +1,6 @@
 import 'package:fairpay/Screens/FlightBooking.dart';
 import 'package:fairpay/Screens/MakePrediction.dart';
+import 'package:fairpay/Widget/ConstantWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +13,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   int _index=0;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+
+  TextStyle tab1=selectedTab;
+  TextStyle tab2=unSelectedTab;
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -48,24 +46,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: TextButton(onPressed: (){
                         setState(() {
                           _index=0;
+                          tab1=selectedTab;
+                          tab2=unSelectedTab;
                           });
-                        }, child: Text('Predict Price',style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700
-                      ),
+                        }, child: Text('Predict Price',style:tab1,
                       )),
                     ),
                     Expanded(
                       child: TextButton(onPressed: (){
                         setState(() {
                           _index=1;
+
+                          tab2=selectedTab;
+                          tab1=unSelectedTab;
                           });
-                        }, child: Text('Book Flight',style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700
-                      ))),
+                        }, child: Text('Book Flight',style: tab2)),
                     ),
                   ],
                 ),

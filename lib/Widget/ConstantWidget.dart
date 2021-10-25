@@ -246,5 +246,16 @@ class AddPassenger extends StatelessWidget {
   }
 }
 
+TextStyle selectedTab=TextStyle(
+    color: Colors.yellow[700],
+    fontSize: 20,
+    decoration: TextDecoration.underline,
+    fontWeight: FontWeight.w900,
 
+);
 
+TextStyle unSelectedTab=TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.w700
+);
