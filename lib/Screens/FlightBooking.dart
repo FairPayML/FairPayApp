@@ -220,57 +220,6 @@ class _BookingScreenState extends State<BookingScreen> {
                       )
                     ],
                   ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'Arrival Date',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _selectDate(context, 2);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset('images/calendar.png'),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text('$arvDate')
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Arrival Time',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _selectTime(context, 2);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.timer),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text('$arvTime')
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
               Text(
@@ -581,41 +530,42 @@ class _BookingScreenState extends State<BookingScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              DropdownButton(
-                hint: Text(
-                  'Choose No. of Stops',
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.4),
-                      fontSize: 9),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(left: 10,right: 20),
+                child: DropdownButton(
+                  hint: Text(
+                    'Choose No. of Stops',
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.4),
+                        fontSize: 9),
+                  ),
+                  value: stops,
+                  isExpanded: true,
+                  items: <String>['Non-Stop', '1', '2', '3', '4']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? val) {
+                    setState(() {
+                      stops = val;
+                    });
+                  },
+                  elevation: 2,
                 ),
-                value: stops,
-                items: <String>['Non-Stop', '1', '2', '3', '4']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? val) {
-                  setState(() {
-                    stops = val;
-                  });
-                },
-                elevation: 2,
               ),
               SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
-                  print(stops);
                   if (_source != null &&
                       _destination != null &&
-                      airlines != null &&
                       stops != null &&
                       deptDate != null &&
-                      arvDate != null &&
-                      deptTime != null &&
-                      arvTime != null)
-                    Get.toNamed('/predict', arguments: [
+                      deptTime != null)
+                    Get.toNamed('/book', arguments: [
                       _source,
                       _destination,
                       airlines,
@@ -623,7 +573,8 @@ class _BookingScreenState extends State<BookingScreen> {
                       deptDate,
                       arvDate,
                       deptTime,
-                      arvTime
+                      arvTime,
+                      23.3
                     ]);
                   else
                     Get.snackbar('Field is Empty',
@@ -641,7 +592,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         ),
                         color: Color(0xffDAA210)),
                     width: MediaQuery.of(context).size.width,
-                    child: Text('Check The Price',
+                    child: Text('Search the Flight',
                         style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontWeight: FontWeight.bold))),
@@ -670,6 +621,9 @@ class _BookingScreenState extends State<BookingScreen> {
         if(pass==3)
           _noInfants++;
       }
+      setState(() {
+        _noPass=_noInfants+_noChild+_noAdult;
+      });
     });
 
   }
@@ -694,6 +648,9 @@ class _BookingScreenState extends State<BookingScreen> {
       icons[0]=Icons.radio_button_unchecked;
       icons[1]=Icons.radio_button_unchecked;
     }
+    setState(() {
+      flgCls;
+    });
   });
 
   }

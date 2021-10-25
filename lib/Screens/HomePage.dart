@@ -1,5 +1,6 @@
 import 'package:fairpay/Screens/FlightBooking.dart';
 import 'package:fairpay/Screens/MakePrediction.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -36,21 +37,38 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         image: ExactAssetImage('images/map.png'),
                         fit: BoxFit.cover)),
               ),
-              Row(
-                children: [
-                  TextButton(onPressed: (){
-                    setState(() {
-                      _index=0;
-                    });
-
-                  }, child: Text('press me')),
-                  TextButton(onPressed: (){
-                    setState(() {
-                      _index=1;
-                    });
-
-                  }, child: Text('press me')),
-                ],
+              Container(
+                padding: EdgeInsets.all(10),
+                height: 140,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: TextButton(onPressed: (){
+                        setState(() {
+                          _index=0;
+                          });
+                        }, child: Text('Predict Price',style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700
+                      ),
+                      )),
+                    ),
+                    Expanded(
+                      child: TextButton(onPressed: (){
+                        setState(() {
+                          _index=1;
+                          });
+                        }, child: Text('Book Flight',style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700
+                      ))),
+                    ),
+                  ],
+                ),
               ),
               Container(
                   height: MediaQuery.of(context).size.height,

@@ -14,38 +14,28 @@ class _MakePredictionState extends State<MakePrediction> {
   String? airlines;
   String? stops;
   DateTime departureDate = DateTime.now();
-  DateTime arrivalDate = DateTime.now();
   TimeOfDay departureTime = TimeOfDay.now();
-  TimeOfDay arrivalTime = TimeOfDay.now();
 
-  Future<void> _selectDate(BuildContext context, int select) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
-        initialDate: select == 1 ? DateTime.now() : departureDate,
-        firstDate: select == 1 ? DateTime.now() : departureDate,
+        initialDate:departureDate,
+        firstDate: departureDate,
         lastDate: DateTime(2050));
     if (pickedDate != null && pickedDate != departureDate)
-      setState(() {
         setState(() {
-          if (select == 1)
             departureDate = pickedDate;
-          else
-            arrivalDate = pickedDate;
         });
-      });
   }
 
-  Future<void> _selectTime(BuildContext context, int select) async {
+  Future<void> _selectTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: select == 1 ? departureTime : arrivalTime,
+      initialTime: departureTime,
     );
     if (pickedTime != null && pickedTime != departureTime) {
       setState(() {
-        if (select == 1)
           departureTime = pickedTime;
-        else
-          arrivalTime = pickedTime;
       });
     }
   }
@@ -54,11 +44,9 @@ class _MakePredictionState extends State<MakePrediction> {
   Widget build(BuildContext context) {
     MaterialLocalizations localizations = MaterialLocalizations.of(context);
     String deptDate = DateFormat('yyyy-MM-dd').format(departureDate);
-    String arvDate = DateFormat('yyyy-MM-dd').format(arrivalDate);
     String deptTime = localizations.formatTimeOfDay(departureTime,
         alwaysUse24HourFormat: true);
-    String arvTime =
-        localizations.formatTimeOfDay(arrivalTime, alwaysUse24HourFormat: true);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -98,7 +86,7 @@ class _MakePredictionState extends State<MakePrediction> {
                     value: _source,
                     items: <String>[
                       'Delhi',
-                      'Kolkata',
+                      'Bangalore',
                       'Mumbai',
                       'Chennai'
                     ].map<DropdownMenuItem<String>>((String value) {
@@ -132,8 +120,6 @@ class _MakePredictionState extends State<MakePrediction> {
                     value: _destination,
                     items: <String>[
                       'Cochin',
-                      'Delhi',
-                      'New Delhi',
                       'Hyderabad',
                       'Kolkata'
                     ].map<DropdownMenuItem<String>>((String value) {
@@ -169,7 +155,7 @@ class _MakePredictionState extends State<MakePrediction> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _selectDate(context, 1);
+                        _selectDate(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -194,7 +180,7 @@ class _MakePredictionState extends State<MakePrediction> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _selectTime(context, 1);
+                        _selectTime(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -209,57 +195,6 @@ class _MakePredictionState extends State<MakePrediction> {
                     )
                   ],
                 ),
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'Arrival Date',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _selectDate(context, 2);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset('images/calendar.png'),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('$arvDate')
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Arrival Time',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _selectTime(context, 2);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.timer),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('$arvTime')
-                        ],
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
             SizedBox(
@@ -324,7 +259,7 @@ class _MakePredictionState extends State<MakePrediction> {
                     fontSize: 9),
               ),
               value: stops,
-              items: <String>['Non-Stop', '1', '2', '3', '4']
+              items: <String>['Non-Stop', '1', '2']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -341,24 +276,21 @@ class _MakePredictionState extends State<MakePrediction> {
             SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                print(stops);
                 if (_source != null &&
                     _destination != null &&
                     airlines != null &&
                     stops != null &&
                     deptDate != null &&
-                    arvDate != null &&
-                    deptTime != null &&
-                    arvTime != null)
+                    deptTime != null)
                   Get.toNamed('/predict', arguments: [
                     _source,
                     _destination,
                     airlines,
                     stops,
+                    departureDate,
+                    departureTime,
                     deptDate,
-                    arvDate,
                     deptTime,
-                    arvTime
                   ]);
                 else
                   Get.snackbar('Field is Empty',

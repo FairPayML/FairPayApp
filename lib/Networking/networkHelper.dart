@@ -17,7 +17,6 @@ class NetworkHelper {
         'https://fairpay517.herokuapp.com/predict?Dep_time=${deptDate}T${deptTime}'
             '&Arrival_Time=${arvDate}T${arvTime}&airline=${airlines}&Source=${source}'
             '&Destination=${destination}&stops=$stops'));
-
     if (response.statusCode == 200) {
       String data = response.body;
       return jsonDecode(data);

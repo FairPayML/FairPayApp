@@ -135,7 +135,7 @@ class FlightWidget extends StatelessWidget {
             ],
           ),
           Text(
-            'Price Is $predictedPrice',
+            'Price Is Rs.$predictedPrice',
           ),
         ],
       ),
@@ -163,12 +163,15 @@ class DetailWidget extends StatelessWidget {
               ),
             ),
 
-          Text(detail,
-            style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                color:Color(0xffDAA210))
-           ),
+          Flexible(
+            child: Text(detail,
+              textAlign: TextAlign.end,
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color:Color(0xffDAA210))
+             ),
+          ),
         ]
     );
   }

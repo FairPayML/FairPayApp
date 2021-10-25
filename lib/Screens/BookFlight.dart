@@ -39,18 +39,18 @@ class _BookFlightState extends State<BookFlight> {
     String dept=arg[0].toString();
     String dest=arg[1].toString();
     String airlines=arg[2].toString();
-    String stops=arg[3].toString();
-    if(stops=='Non-Stop')
-      isNonStop=true;
+
     String deptDate=arg[4].toString();
-    String destDate=arg[5].toString();
-    String destTime=arg[6].toString();
-    String deptTime=arg[7].toString();
+    String destDate=arg[6].toString();
+    String destTime=arg[7].toString();
+    String deptTime=arg[5].toString();
     double predictedPrice=double.parse(arg[8].toString());
     String deptAirport='';
     String destAirport='';
     if(dept=='Delhi')
       deptAirport='DEL';
+    else if(dept=='Bangalore')
+      deptAirport='BLR';
     else if(dept=='Kolkata')
       deptAirport='CCU';
     else if(dept=='Mumbai')
@@ -60,10 +60,6 @@ class _BookFlightState extends State<BookFlight> {
 
     if(dest=='Cochin')
       destAirport='COK';
-    else if(dest=='Delhi')
-      destAirport='DEL';
-    else if(dest=='New Delhi')
-      destAirport='DEL';
     else if(dest=='Hyderabad')
       destAirport='HYD';
     else
@@ -85,17 +81,25 @@ class _BookFlightState extends State<BookFlight> {
                   ),
                 );
               }else{
-                if (snapshot.hasError) {
-                  print(snapshot.error.toString());
+                if (snapshot.hasError || data['meta']==null) {
                   return Container(
                     child: Text('Error Occured'),
                   );
                 }else{
+                  if(data["meta"]["count"]==0){
+                    return Center(child: Image.asset('images/noflight.png',fit: BoxFit.fitWidth,));
+                  }else{
+
                   return Container(
                     child: ListView.builder(
                         padding: EdgeInsets.all(5),
                         itemCount:data["meta"]["count"],
                         itemBuilder: (context,index){
+                          String stops=data["data"][index]['itineraries'][0]["segments"][0]['numberOfStops'].toString();
+                          if(stops=='0') {
+                            stops='Non-Stop';
+                            isNonStop = true;
+                          }
                           return GestureDetector(
                             onTap: (){
                               print(data["data"][index]);
@@ -117,6 +121,7 @@ class _BookFlightState extends State<BookFlight> {
                     ),
                   );
                 }
+              }
               }
             },
           future: getData(deptAirport, destAirport, deptDate, 1,isNonStop),
