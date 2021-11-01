@@ -136,13 +136,8 @@ class _BookingScreenState extends State<BookingScreen> {
                             color: Colors.black.withOpacity(0.4),
                             fontSize: 12)),
                     value: _destination,
-                    items: <String>[
-                      'Cochin',
-                      'Delhi',
-                      'New Delhi',
-                      'Hyderabad',
-                      'Kolkata'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Cochin', 'Hyderabad', 'Kolkata']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -159,7 +154,7 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 5,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -614,9 +609,6 @@ class _BookingScreenState extends State<BookingScreen> {
         if (pass == 2) _noChild++;
         if (pass == 3) _noInfants++;
       }
-      setState(() {
-        _noPass = _noInfants + _noChild + _noAdult;
-      });
     });
   }
 

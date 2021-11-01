@@ -11,6 +11,7 @@ class FlightWidget extends StatelessWidget {
     required this.destDate,
     required this.destTime,
     required this.deptTime,
+    required this.airline,
   });
 
   final String stops;
@@ -21,7 +22,7 @@ class FlightWidget extends StatelessWidget {
   final String destTime;
   final String deptTime;
   final double predictedPrice;
-
+  final String airline;
   @override
   Widget build(BuildContext context) {
     String stop = '';
@@ -126,8 +127,15 @@ class FlightWidget extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            'Price Is Rs.$predictedPrice',
+          Row(
+            children: [
+              Text(airline),
+              Expanded(
+                child: Text(
+                  'Price Is Rs.$predictedPrice',
+                ),
+              ),
+            ],
           ),
         ],
       ),

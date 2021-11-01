@@ -36,7 +36,7 @@ class _BookFlightState extends State<BookFlight> {
     bool isNonStop = false;
     String dept = arg[0].toString();
     String dest = arg[1].toString();
-    String airlines = arg[2].toString();
+
     String deptDate = arg[4].toString();
     String destDate = arg[6].toString();
     String destTime = arg[7].toString();
@@ -46,8 +46,6 @@ class _BookFlightState extends State<BookFlight> {
     String destAirport = '';
     if (dept == 'Delhi')
       deptAirport = 'DEL';
-    else if (dept == 'Bangalore')
-      deptAirport = 'BLR';
     else if (dept == 'Kolkata')
       deptAirport = 'CCU';
     else if (dept == 'Mumbai')
@@ -113,6 +111,9 @@ class _BookFlightState extends State<BookFlight> {
                                   predictedPrice: predictedPrice,
                                   dept: deptAirport,
                                   dest: destAirport,
+                                  airline: data['data'][0]['itineraries'][0]
+                                          ['segments'][0]['operating']
+                                      ['carrierCode'],
                                   deptDate: deptDate,
                                   destDate: destDate,
                                   destTime: destTime,
