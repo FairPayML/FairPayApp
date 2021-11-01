@@ -229,6 +229,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 showModalBottomSheet(
                     barrierColor: Colors.black.withOpacity(0.7),
                     backgroundColor: Colors.transparent,
+                    isDismissible: false,
                     context: context,
                     builder: (context) {
                       return StatefulBuilder(
@@ -332,9 +333,6 @@ class _BookingScreenState extends State<BookingScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                      flgCls;
-                                    });
                                     Navigator.pop(context);
                                   },
                                   child: Container(
@@ -392,6 +390,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 showModalBottomSheet(
                     barrierColor: Colors.black.withOpacity(0.7),
                     backgroundColor: Colors.transparent,
+                    isDismissible: false,
                     context: context,
                     builder: (context) {
                       return StatefulBuilder(
@@ -566,11 +565,7 @@ class _BookingScreenState extends State<BookingScreen> {
             SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                if (_source != null &&
-                    _destination != null &&
-                    stops != null &&
-                    deptDate != null &&
-                    deptTime != null)
+                if (_source != null && _destination != null && stops != null)
                   Get.toNamed('/book', arguments: [
                     _source,
                     _destination,
@@ -625,14 +620,14 @@ class _BookingScreenState extends State<BookingScreen> {
     });
   }
 
-  Future<Null> updateClass(StateSetter state, int Cls) async {
+  Future<Null> updateClass(StateSetter state, int cls) async {
     state(() {
-      if (Cls == 1) {
+      if (cls == 1) {
         flgCls = 'Economy';
         icons[0] = Icons.check_circle;
         icons[1] = Icons.radio_button_unchecked;
         icons[2] = Icons.radio_button_unchecked;
-      } else if (Cls == 2) {
+      } else if (cls == 2) {
         flgCls = 'Business';
         icons[1] = Icons.check_circle;
         icons[0] = Icons.radio_button_unchecked;
@@ -643,9 +638,6 @@ class _BookingScreenState extends State<BookingScreen> {
         icons[0] = Icons.radio_button_unchecked;
         icons[1] = Icons.radio_button_unchecked;
       }
-      setState(() {
-        flgCls;
-      });
     });
   }
 }

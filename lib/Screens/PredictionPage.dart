@@ -13,8 +13,8 @@ class Prediction extends StatefulWidget {
 
 class _PredictionState extends State<Prediction> {
   var price;
-  String arvDate='';
-  String arvTime='';
+  String arvDate = '';
+  String arvTime = '';
   Future<dynamic> predictPrice(
       String source,
       String destination,
@@ -24,122 +24,113 @@ class _PredictionState extends State<Prediction> {
       TimeOfDay departureTime,
       String deptDate,
       String deptTime) async {
-    int hr=0,min=0;
+    int hr = 0, min = 0;
     DateTime arrivalDate = DateTime.now();
     TimeOfDay arrivalTime = TimeOfDay.now();
-    if(source=='Delhi' && destination=='Cochin') {
-      min=15;
-      if(stops=='Non-Stop')
-        hr=3;
-      if(stops=='1')
-        hr=5;
+    if (source == 'Delhi' && destination == 'Cochin') {
+      min = 15;
+      if (stops == 'Non-Stop') hr = 3;
+      if (stops == '1')
+        hr = 5;
       else
-        hr=15;
+        hr = 15;
     }
-    if(source=='Delhi' && destination=='Hyderabad'){
-      min=30;
-      if(stops=='Non-Stop')
-        hr=2;
-      if(stops=='1')
-        hr=6;
+    if (source == 'Delhi' && destination == 'Hyderabad') {
+      min = 30;
+      if (stops == 'Non-Stop') hr = 2;
+      if (stops == '1')
+        hr = 6;
       else
-        hr=9;
+        hr = 9;
     }
-    if(source=='Delhi' && destination=='Kolkata'){
-      if(stops=='Non-Stop')
-        hr=2;
-      if(stops=='1')
-        hr=24;
+    if (source == 'Delhi' && destination == 'Kolkata') {
+      if (stops == 'Non-Stop') hr = 2;
+      if (stops == '1')
+        hr = 24;
       else
-        hr=28;
+        hr = 28;
     }
-    if(source=='Bangalore' && destination=='Cochin'){
-      min=15;
-      if(stops=='Non-Stop')
-        hr=24;
-      if(stops=='1')
-        hr=28;
+    if (source == 'Bangalore' && destination == 'Cochin') {
+      min = 15;
+      if (stops == 'Non-Stop') hr = 24;
+      if (stops == '1')
+        hr = 28;
       else
-        hr=31;
+        hr = 31;
     }
-    if(source=='Bangalore' && destination=='Hyderabad'){
-      min=30;
-      if(stops=='Non-Stop')
-        hr=1;
-      if(stops=='1')
-        hr=3;
+    if (source == 'Bangalore' && destination == 'Hyderabad') {
+      min = 30;
+      if (stops == 'Non-Stop') hr = 1;
+      if (stops == '1')
+        hr = 3;
       else
-        hr=8;
+        hr = 8;
     }
-    if(source=='Bangalore' && destination=='Kolkata'){
-      min=45;
-      if(stops=='Non-Stop')
-        hr=2;
-      if(stops=='1')
-        hr=9;
+    if (source == 'Bangalore' && destination == 'Kolkata') {
+      min = 45;
+      if (stops == 'Non-Stop') hr = 2;
+      if (stops == '1')
+        hr = 9;
       else
-        hr=15;
+        hr = 15;
     }
-    if(source=='Mumbai' && destination=='Cochin'){
-      min=15;
-      if(stops=='Non-Stop')
-        hr=2;
-      if(stops=='1')
-        hr=13;
+    if (source == 'Mumbai' && destination == 'Cochin') {
+      min = 15;
+      if (stops == 'Non-Stop') hr = 2;
+      if (stops == '1')
+        hr = 13;
       else
-        hr=18;
+        hr = 18;
     }
-    if(source=='Mumbai' && destination=='Hyderabad'){
-      min=24;
-      if(stops=='Non-Stop')
-        hr=1;
-      if(stops=='1')
-        hr=7;
+    if (source == 'Mumbai' && destination == 'Hyderabad') {
+      min = 24;
+      if (stops == 'Non-Stop') hr = 1;
+      if (stops == '1')
+        hr = 7;
       else
-        hr=16;
+        hr = 16;
     }
-    if(source=='Mumbai' && destination=='Kolkata'){
-      min=15;
-      if(stops=='Non-Stop')
-        hr=6;
-      if(stops=='1')
-        hr=10;
+    if (source == 'Mumbai' && destination == 'Kolkata') {
+      min = 15;
+      if (stops == 'Non-Stop') hr = 6;
+      if (stops == '1')
+        hr = 10;
       else
-        hr=17;
+        hr = 17;
     }
-    if(source=='Chennai' && destination=='Cochin'){
-      min=15;
-      if(stops=='Non-Stop')
-        hr=12;
-      if(stops=='1')
-        hr=22;
+    if (source == 'Chennai' && destination == 'Cochin') {
+      min = 15;
+      if (stops == 'Non-Stop') hr = 12;
+      if (stops == '1')
+        hr = 22;
       else
-        hr=31;
+        hr = 31;
     }
-    if(source=='Chennai' && destination=='Hyderabad'){
-      min=25;
-      if(stops=='Non-Stop')
-        hr=1;
-      if(stops=='1')
-        hr=3;
+    if (source == 'Chennai' && destination == 'Hyderabad') {
+      min = 25;
+      if (stops == 'Non-Stop') hr = 1;
+      if (stops == '1')
+        hr = 3;
       else
-        hr=5;
+        hr = 5;
     }
-    if(source=='Chennai' && destination=='Kolkata'){
-      min=40;
-      if(stops=='Non-Stop')
-        hr=7;
-      if(stops=='1')
-        hr=11;
+    if (source == 'Chennai' && destination == 'Kolkata') {
+      min = 40;
+      if (stops == 'Non-Stop') hr = 7;
+      if (stops == '1')
+        hr = 11;
       else
-        hr=15;
+        hr = 15;
     }
-    arrivalDate=departureDate.add(Duration(hours: departureDate.hour+departureTime.hour+hr,minutes: departureDate.minute+departureTime.minute));
-    arrivalTime=TimeOfDay.fromDateTime(arrivalDate);
+    arrivalDate = departureDate.add(Duration(
+        hours: departureDate.hour + departureTime.hour + hr,
+        minutes: departureDate.minute + departureTime.minute + min));
+    arrivalTime = TimeOfDay.fromDateTime(arrivalDate);
     MaterialLocalizations localizations = MaterialLocalizations.of(context);
     arvDate = DateFormat('yyyy-MM-dd').format(arrivalDate).toString();
-    arvTime =
-    localizations.formatTimeOfDay(arrivalTime, alwaysUse24HourFormat: true).toString();
+    arvTime = localizations
+        .formatTimeOfDay(arrivalTime, alwaysUse24HourFormat: true)
+        .toString();
     NetworkHelper networkHelper = NetworkHelper();
     price = await networkHelper.predicts(source, destination, airlines, stops,
         deptDate, arvDate, deptTime, arvTime);
@@ -169,7 +160,6 @@ class _PredictionState extends State<Prediction> {
                 print(snapshot.error.toString());
                 return Container(
                   child: Text('Error Occured'),
-
                 );
               } else {
                 double predictedPrice = double.parse(price['response']);
@@ -182,45 +172,85 @@ class _PredictionState extends State<Prediction> {
                 else
                   stops = '${arg[3]} stops';
                 return Container(
-                  padding:EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         children: [
-                          DetailWidget(title: 'Origin Place',detail: arg[0],),
-                          SizedBox(height: 10,),
-                          DetailWidget(title: 'Arrival Place',detail: arg[1],),
-                          SizedBox(height: 10,),
-                          DetailWidget(title: 'Airline',detail: arg[2],),
-                          SizedBox(height: 10,),
-                          DetailWidget(title: 'Stops',detail: stops,),
-                          SizedBox(height: 10,),
-                          DetailWidget(title: 'Departure Time',detail: arg[7],),
-                          SizedBox(height: 10,),
-                          DetailWidget(title: 'Departure Date',detail: arg[6],),
+                          DetailWidget(
+                            title: 'Origin Place',
+                            detail: arg[0],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          DetailWidget(
+                            title: 'Arrival Place',
+                            detail: arg[1],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          DetailWidget(
+                            title: 'Airline',
+                            detail: arg[2],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          DetailWidget(
+                            title: 'Stops',
+                            detail: stops,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          DetailWidget(
+                            title: 'Departure Time',
+                            detail: arg[7],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          DetailWidget(
+                            title: 'Departure Date',
+                            detail: arg[6],
+                          ),
                         ],
                       ),
                       Column(
                         children: [
-                          PricePredicted(title: 'Predicted Price',detail: predictedPrice.toString(),),
-                          SizedBox(height: 20,),
+                          PricePredicted(
+                            title: 'Predicted Price',
+                            detail: predictedPrice.toString(),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           ConfirmationSlider(
-                              onConfirmation: (){
-                                  Get.toNamed('/book',arguments: [
-                                    arg[0],arg[1],arg[2],arg[3],arg[6],arg[7],arvDate,arvTime,predictedPrice
-                                  ]);
-                                },
+                            onConfirmation: () {
+                              Get.toNamed('/book', arguments: [
+                                arg[0],
+                                arg[1],
+                                arg[2],
+                                arg[3],
+                                arg[6],
+                                arg[7],
+                                arvDate,
+                                arvTime,
+                                predictedPrice
+                              ]);
+                            },
                             backgroundColor: Color(0xffDAA210),
                             backgroundColorEnd: Colors.yellowAccent,
                             iconColor: Colors.yellowAccent,
                             foregroundColor: Colors.yellow,
                             text: "Slide to Book",
                             textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900
-                            ),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900),
                           )
                         ],
                       )
@@ -237,4 +267,3 @@ class _PredictionState extends State<Prediction> {
     );
   }
 }
-

@@ -19,13 +19,13 @@ class _MakePredictionState extends State<MakePrediction> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
-        initialDate:departureDate,
+        initialDate: departureDate,
         firstDate: departureDate,
         lastDate: DateTime(2050));
     if (pickedDate != null && pickedDate != departureDate)
-        setState(() {
-            departureDate = pickedDate;
-        });
+      setState(() {
+        departureDate = pickedDate;
+      });
   }
 
   Future<void> _selectTime(BuildContext context) async {
@@ -35,7 +35,7 @@ class _MakePredictionState extends State<MakePrediction> {
     );
     if (pickedTime != null && pickedTime != departureTime) {
       setState(() {
-          departureTime = pickedTime;
+        departureTime = pickedTime;
       });
     }
   }
@@ -56,12 +56,10 @@ class _MakePredictionState extends State<MakePrediction> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(10),
-              margin:
-                  EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(
-                    color: Color(0xffB3BABF).withOpacity(0.5)),
+                border: Border.all(color: Color(0xffB3BABF).withOpacity(0.5)),
                 borderRadius: BorderRadius.all(Radius.circular(32)),
               ),
               child: Column(
@@ -80,16 +78,11 @@ class _MakePredictionState extends State<MakePrediction> {
                     hint: Text(
                       'Select Your Origin',
                       style: TextStyle(
-                          color: Colors.black.withOpacity(0.4),
-                          fontSize: 12),
+                          color: Colors.black.withOpacity(0.4), fontSize: 12),
                     ),
                     value: _source,
-                    items: <String>[
-                      'Delhi',
-                      'Bangalore',
-                      'Mumbai',
-                      'Chennai'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Delhi', 'Bangalore', 'Mumbai', 'Chennai']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -118,11 +111,8 @@ class _MakePredictionState extends State<MakePrediction> {
                             color: Colors.black.withOpacity(0.4),
                             fontSize: 12)),
                     value: _destination,
-                    items: <String>[
-                      'Cochin',
-                      'Hyderabad',
-                      'Kolkata'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Cochin', 'Hyderabad', 'Kolkata']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -211,8 +201,7 @@ class _MakePredictionState extends State<MakePrediction> {
               hint: Text(
                 'Choose an airline',
                 style: TextStyle(
-                    color: Colors.black.withOpacity(0.4),
-                    fontSize: 9),
+                    color: Colors.black.withOpacity(0.4), fontSize: 9),
               ),
               value: airlines,
               items: <String>[
@@ -255,8 +244,7 @@ class _MakePredictionState extends State<MakePrediction> {
               hint: Text(
                 'Choose No. of Stops',
                 style: TextStyle(
-                    color: Colors.black.withOpacity(0.4),
-                    fontSize: 9),
+                    color: Colors.black.withOpacity(0.4), fontSize: 9),
               ),
               value: stops,
               items: <String>['Non-Stop', '1', '2']
@@ -279,9 +267,7 @@ class _MakePredictionState extends State<MakePrediction> {
                 if (_source != null &&
                     _destination != null &&
                     airlines != null &&
-                    stops != null &&
-                    deptDate != null &&
-                    deptTime != null)
+                    stops != null)
                   Get.toNamed('/predict', arguments: [
                     _source,
                     _destination,
@@ -293,8 +279,8 @@ class _MakePredictionState extends State<MakePrediction> {
                     deptTime,
                   ]);
                 else
-                  Get.snackbar('Field is Empty',
-                      'All Fields are Mandatory to fill',
+                  Get.snackbar(
+                      'Field is Empty', 'All Fields are Mandatory to fill',
                       snackPosition: SnackPosition.BOTTOM,
                       colorText: Colors.white,
                       backgroundColor: Color(0xff468A62));
@@ -310,8 +296,7 @@ class _MakePredictionState extends State<MakePrediction> {
                   width: MediaQuery.of(context).size.width,
                   child: Text('Check The Price',
                       style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold))),
+                          color: Colors.white, fontWeight: FontWeight.bold))),
             ),
           ],
         ),
