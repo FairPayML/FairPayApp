@@ -6,12 +6,12 @@ import 'Screens/MakePrediction.dart';
 import 'Screens/PredictionPage.dart';
 import 'Screens/BookFlight.dart';
 import 'Screens/HomePage.dart';
+
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => Login()),
         GetPage(name: '/signup', page: () => Signup()),
-        GetPage(name: '/home', page: ()=>Home()),
+        GetPage(name: '/home', page: () => Home()),
         GetPage(name: '/makePredict', page: () => MakePrediction()),
         GetPage(name: '/predict', page: () => Prediction()),
-        GetPage(name: '/book', page: ()=> BookFlight())
+        GetPage(name: '/book', page: () => BookFlight())
       ],
     );
   }

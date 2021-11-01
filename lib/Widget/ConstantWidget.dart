@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class FlightWidget extends StatelessWidget {
   const FlightWidget({
     required this.stops,
@@ -34,9 +33,8 @@ class FlightWidget extends StatelessWidget {
       stop = '$stops stops';
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        border: Border.all(color: Colors.green,width: 2)
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: Colors.green, width: 2)),
       padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +67,6 @@ class FlightWidget extends StatelessWidget {
               Expanded(
                 child: Text(
                   '$dest',
-
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
@@ -88,8 +85,7 @@ class FlightWidget extends StatelessWidget {
                   '$deptDate',
                   textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffDAA210)),
+                      fontWeight: FontWeight.bold, color: Color(0xffDAA210)),
                 ),
               ),
               Expanded(
@@ -97,8 +93,7 @@ class FlightWidget extends StatelessWidget {
                   '$destDate',
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff4F755B)),
+                      fontWeight: FontWeight.bold, color: Color(0xff4F755B)),
                 ),
               ),
             ],
@@ -110,8 +105,7 @@ class FlightWidget extends StatelessWidget {
                   '$deptTime',
                   textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xffDAA210)),
+                      fontWeight: FontWeight.w500, color: Color(0xffDAA210)),
                 ),
               ),
               Expanded(
@@ -119,8 +113,7 @@ class FlightWidget extends StatelessWidget {
                   '$stop',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff2F80ED)),
+                      fontWeight: FontWeight.bold, color: Color(0xff2F80ED)),
                 ),
               ),
               Expanded(
@@ -128,8 +121,7 @@ class FlightWidget extends StatelessWidget {
                   '$destTime',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff4F755B)),
+                      fontWeight: FontWeight.w500, color: Color(0xff4F755B)),
                 ),
               ),
             ],
@@ -151,29 +143,23 @@ class DetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        children:[
-          Expanded(
-            child: Text(
-              title,
-              style: GoogleFonts.poppins(
+    return Row(children: [
+      Expanded(
+        child: Text(title,
+            style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: Color(0xff4F755B))
-              ),
-            ),
-
-          Flexible(
-            child: Text(detail,
-              textAlign: TextAlign.end,
-              style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                  color:Color(0xffDAA210))
-             ),
-          ),
-        ]
-    );
+                color: Color(0xff4F755B))),
+      ),
+      Flexible(
+        child: Text(detail,
+            textAlign: TextAlign.end,
+            style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: Color(0xffDAA210))),
+      ),
+    ]);
   }
 }
 
@@ -185,35 +171,28 @@ class PricePredicted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        children:[
-          Expanded(
-            child: Text(
-                title,
-                style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xff4F755B))
-            ),
-          ),
-
-          Text('Rs. $detail',
-              style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  color:Color(0xff2F80ED))
-          ),
-        ]
-    );
+    return Row(children: [
+      Expanded(
+        child: Text(title,
+            style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+                color: Color(0xff4F755B))),
+      ),
+      Text('Rs. $detail',
+          style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: Color(0xff2F80ED))),
+    ]);
   }
 }
 
 class AddPassenger extends StatelessWidget {
-  const AddPassenger({
-    required this.typePass,
-    required this.addFunction,
-    required this.subFunction
-  });
+  const AddPassenger(
+      {required this.typePass,
+      required this.addFunction,
+      required this.subFunction});
   final int typePass;
   final addFunction;
   final subFunction;
@@ -222,22 +201,32 @@ class AddPassenger extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap:addFunction,
+          onTap: addFunction,
           child: CircleAvatar(
-            child: Icon(Icons.remove,color: Colors.black,),
+            child: Icon(
+              Icons.remove,
+              color: Colors.black,
+            ),
             backgroundColor: Colors.grey,
           ),
         ),
-        SizedBox(width: 5,),
-        Text('$typePass',style: TextStyle(
-            color: Colors.black,
-            fontSize: 20
-        ),),
-        SizedBox(width: 5,),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          '$typePass',
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        ),
+        SizedBox(
+          width: 10,
+        ),
         GestureDetector(
-          onTap:subFunction,
+          onTap: subFunction,
           child: CircleAvatar(
-            child: Icon(Icons.add,color: Colors.black,),
+            child: Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
             backgroundColor: Colors.grey,
           ),
         )
@@ -246,16 +235,38 @@ class AddPassenger extends StatelessWidget {
   }
 }
 
-TextStyle selectedTab=TextStyle(
-    color: Colors.yellow[700],
-    fontSize: 20,
-    decoration: TextDecoration.underline,
-    fontWeight: FontWeight.w900,
-
+TextStyle selectedTab = TextStyle(
+  color: Colors.yellow[700],
+  fontSize: 20,
+  decoration: TextDecoration.underline,
+  fontWeight: FontWeight.w900,
 );
 
-TextStyle unSelectedTab=TextStyle(
-    color: Colors.white,
-    fontSize: 20,
-    fontWeight: FontWeight.w700
-);
+TextStyle unSelectedTab =
+    TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700);
+
+class PassengerText extends StatelessWidget {
+  final String title;
+  final String detail;
+  const PassengerText({required this.title, required this.detail});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w900, fontSize: 20),
+        ),
+        Text(
+          detail,
+          style: TextStyle(
+              color: Colors.grey[800],
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
+        )
+      ],
+    );
+  }
+}
