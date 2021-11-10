@@ -16,16 +16,17 @@ class _BookFlightState extends State<BookFlight> {
   var data;
   late FlightModel flightModel;
   Future<dynamic> getData(String dept, String dest, String deptDate, int noPass,
-      bool isNonStop) async {
+      bool isNonStop, String travelClass) async {
     NetworkHelper networkHelper = NetworkHelper();
     var response = await networkHelper.getAccessToken();
     String token = response["access_token"].toString();
     var res = await http.get(
         Uri.parse("https://test.api.amadeus.com/v2/shopping/flight-offers?"
             "originLocationCode=$dept&destinationLocationCode=$dest&departureDate=$deptDate"
-            "&adults=$noPass&currencyCode=INR&nonStop=$isNonStop"),
+            "&adults=$noPass&currencyCode=INR&nonStop=$isNonStop&travelClass=$travelClass"),
         headers: {"Authorization": "Bearer $token"});
     data = jsonDecode(res.body);
+
     print(data);
     return data;
   }
@@ -36,12 +37,9 @@ class _BookFlightState extends State<BookFlight> {
     bool isNonStop = false;
     String dept = arg[0].toString();
     String dest = arg[1].toString();
-
-    String deptDate = arg[4].toString();
-    String destDate = arg[6].toString();
-    String destTime = arg[7].toString();
-    String deptTime = arg[5].toString();
+    String departureDate = arg[4];
     double predictedPrice = double.parse(arg[8].toString());
+    String trvlClass = arg[9].toString();
     String deptAirport = '';
     String destAirport = '';
     if (dept == 'Delhi')
@@ -76,7 +74,8 @@ class _BookFlightState extends State<BookFlight> {
                 ),
               );
             } else {
-              if (snapshot.hasError || data['meta'] == null) {
+              print("this is data $data");
+              if (snapshot.hasError || data['meta'] == null || data == null) {
                 return Container(
                   child: Text('Error Occured'),
                 );
@@ -93,6 +92,31 @@ class _BookFlightState extends State<BookFlight> {
                         padding: EdgeInsets.all(5),
                         itemCount: data["meta"]["count"],
                         itemBuilder: (context, index) {
+                          String price = data['data'][index]['price']['total'];
+                          String carrierCode = data['data'][index]
+                                  ['itineraries'][0]['segments'][0]['operating']
+                              ['carrierCode'];
+                          String airline = ' ';
+                          if (carrierCode == '9I')
+                            airline = 'ALLIANCE AIR';
+                          else if (carrierCode == 'UK')
+                            airline = 'VISTARA';
+                          else
+                            airline = 'AIR INDIA';
+                          var deptDateTime = data['data'][index]['itineraries']
+                                  [0]['segments'][0]['departure']['at']
+                              .toString()
+                              .split('T');
+                          String deptDate = deptDateTime[0].toString();
+                          String deptTime =
+                              deptDateTime[1].toString().substring(0, 5);
+                          var destDateTime = data['data'][index]['itineraries']
+                                  [0]['segments'][0]['arrival']['at']
+                              .toString()
+                              .split('T');
+                          String destDate = destDateTime[0].toString();
+                          String destTime =
+                              destDateTime[1].toString().substring(0, 5);
                           String stops = data["data"][index]['itineraries'][0]
                                   ["segments"][0]['numberOfStops']
                               .toString();
@@ -108,12 +132,10 @@ class _BookFlightState extends State<BookFlight> {
                               margin: EdgeInsets.all(10),
                               child: FlightWidget(
                                   stops: stops,
-                                  predictedPrice: predictedPrice,
+                                  price: double.parse(price.toString()),
                                   dept: deptAirport,
                                   dest: destAirport,
-                                  airline: data['data'][0]['itineraries'][0]
-                                          ['segments'][0]['operating']
-                                      ['carrierCode'],
+                                  airline: airline,
                                   deptDate: deptDate,
                                   destDate: destDate,
                                   destTime: destTime,
@@ -126,7 +148,8 @@ class _BookFlightState extends State<BookFlight> {
               }
             }
           },
-          future: getData(deptAirport, destAirport, deptDate, 1, isNonStop),
+          future: getData(
+              deptAirport, destAirport, departureDate, 1, isNonStop, trvlClass),
         ),
       ),
     );

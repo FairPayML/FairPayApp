@@ -542,7 +542,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 value: stops,
                 isExpanded: true,
-                items: <String>['Non-Stop', '1', '2', '3', '4']
+                items: <String>['Non-Stop', '1', '2']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -560,6 +560,13 @@ class _BookingScreenState extends State<BookingScreen> {
             SizedBox(height: 10),
             GestureDetector(
               onTap: () {
+                String fligthClass = 'ECONOMY';
+                if (flgCls == 'Economy')
+                  fligthClass = 'ECONOMY';
+                else if (flgCls == 'Business')
+                  fligthClass = 'BUSINESS';
+                else
+                  fligthClass = 'FIRST';
                 if (_source != null && _destination != null && stops != null)
                   Get.toNamed('/book', arguments: [
                     _source,
@@ -570,7 +577,8 @@ class _BookingScreenState extends State<BookingScreen> {
                     arvDate,
                     deptTime,
                     arvTime,
-                    23.3
+                    23.3,
+                    fligthClass
                   ]);
                 else
                   Get.snackbar(

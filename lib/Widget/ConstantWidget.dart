@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class FlightWidget extends StatelessWidget {
   const FlightWidget({
     required this.stops,
-    required this.predictedPrice,
+    required this.price,
     required this.dept,
     required this.dest,
     required this.deptDate,
@@ -21,7 +21,7 @@ class FlightWidget extends StatelessWidget {
   final String destDate;
   final String destTime;
   final String deptTime;
-  final double predictedPrice;
+  final double price;
   final String airline;
   @override
   Widget build(BuildContext context) {
@@ -34,8 +34,8 @@ class FlightWidget extends StatelessWidget {
       stop = '$stops stops';
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          border: Border.all(color: Colors.green, width: 2)),
+          image: DecorationImage(
+              image: ExactAssetImage('images/bg.png'), fit: BoxFit.fill)),
       padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -127,12 +127,24 @@ class FlightWidget extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
-              Text(airline),
+              Text(
+                airline,
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold, fontSize: 16),
+              ),
               Expanded(
                 child: Text(
-                  'Price Is Rs.$predictedPrice',
+                  'Rs.$price',
+                  textAlign: TextAlign.right,
+                  style: GoogleFonts.poppins(
+                      color: Color(0xff00C48C),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
                 ),
               ),
             ],
