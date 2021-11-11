@@ -74,7 +74,7 @@ class FlightWidget extends StatelessWidget {
                       fontSize: 20,
                       color: Color(0xff4F755B)),
                 ),
-              )
+              ),
             ],
           ),
           Row(

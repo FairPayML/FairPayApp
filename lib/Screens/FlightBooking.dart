@@ -542,7 +542,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 value: stops,
                 isExpanded: true,
-                items: <String>['Non-Stop', '1', '2']
+                items: <String>['Non-Stop', 'stops']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -577,8 +577,10 @@ class _BookingScreenState extends State<BookingScreen> {
                     arvDate,
                     deptTime,
                     arvTime,
-                    23.3,
-                    fligthClass
+                    fligthClass,
+                    _noAdult,
+                    _noChild,
+                    _noInfants
                   ]);
                 else
                   Get.snackbar(

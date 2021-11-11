@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'Screens/LoginPage.dart';
 import 'Screens/SignupPage.dart';
@@ -8,6 +9,8 @@ import 'Screens/BookFlight.dart';
 import 'Screens/HomePage.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(MyApp());
 }
 

@@ -58,7 +58,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     onPressed: () {
                       setState(() {
                         _index = 1;
-
                         tab2 = selectedTab;
                         tab1 = unSelectedTab;
                       });
