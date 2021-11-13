@@ -1,3 +1,4 @@
+import 'package:fairpay/Screens/BookingDeatils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -7,6 +8,7 @@ import 'Screens/MakePrediction.dart';
 import 'Screens/PredictionPage.dart';
 import 'Screens/BookFlight.dart';
 import 'Screens/HomePage.dart';
+import 'Screens/BookingDeatils.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -25,7 +27,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home', page: () => Home()),
         GetPage(name: '/makePredict', page: () => MakePrediction()),
         GetPage(name: '/predict', page: () => Prediction()),
-        GetPage(name: '/book', page: () => BookFlight())
+        GetPage(name: '/book', page: () => BookFlight()),
+        GetPage(name: '/details', page: () => BookingDetail()),
       ],
     );
   }

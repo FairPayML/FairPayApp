@@ -1,3 +1,5 @@
+import 'package:fairpay/Screens/LoadingScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/snackbar/snack.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +24,7 @@ class _BookingScreenState extends State<BookingScreen> {
   TimeOfDay departureTime = TimeOfDay.now();
   TimeOfDay arrivalTime = TimeOfDay.now();
   String flgCls = 'Economy';
+  bool isNonStop = false;
   int _noPass = 0;
   int _noAdult = 0;
   int _noInfants = 0;
@@ -67,11 +70,8 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     MaterialLocalizations localizations = MaterialLocalizations.of(context);
     String deptDate = DateFormat('yyyy-MM-dd').format(departureDate);
-    String arvDate = DateFormat('yyyy-MM-dd').format(arrivalDate);
     String deptTime = localizations.formatTimeOfDay(departureTime,
         alwaysUse24HourFormat: true);
-    String arvTime =
-        localizations.formatTimeOfDay(arrivalTime, alwaysUse24HourFormat: true);
 
     return SingleChildScrollView(
       child: Container(
@@ -567,22 +567,31 @@ class _BookingScreenState extends State<BookingScreen> {
                   fligthClass = 'BUSINESS';
                 else
                   fligthClass = 'FIRST';
-                if (_source != null && _destination != null && stops != null)
-                  Get.toNamed('/book', arguments: [
-                    _source,
-                    _destination,
-                    airlines,
-                    stops,
-                    deptDate,
-                    arvDate,
-                    deptTime,
-                    arvTime,
-                    fligthClass,
-                    _noAdult,
-                    _noChild,
-                    _noInfants
-                  ]);
-                else
+                if (_noAdult == 0) {
+                  Get.snackbar(
+                      'No Adult', 'There should be atleast one adult Passenger',
+                      snackPosition: SnackPosition.BOTTOM,
+                      colorText: Colors.white,
+                      backgroundColor: Color(0xff468A62));
+                } else if (_source != null &&
+                    _destination != null &&
+                    stops != null) {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (_, __, ___) {
+                        return LoadingScreen(
+                            dept: _source,
+                            dest: _destination,
+                            departureDate: deptDate,
+                            trvlClass: fligthClass,
+                            noAdult: _noAdult,
+                            noChild: _noChild,
+                            noInfants: _noInfants);
+                      },
+                    ),
+                  );
+                } else
                   Get.snackbar(
                       'Field is Empty', 'All Fields are Mandatory to fill',
                       snackPosition: SnackPosition.BOTTOM,
