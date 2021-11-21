@@ -14,6 +14,10 @@ class _BookFlightState extends State<BookFlight> {
     return 1;
   }
 
+  bool isVisible = false;
+  String selectAirline = ' ';
+  String selectedPrice = ' ';
+  int selectIndex = -1;
   @override
   Widget build(BuildContext context) {
     var arg = Get.arguments;
@@ -26,7 +30,13 @@ class _BookFlightState extends State<BookFlight> {
     print('data value ${data['meta']['count']}');
     return WillPopScope(
       onWillPop: () {
-        Get.toNamed('/home');
+        if (isVisible == false)
+          Get.toNamed('/home');
+        else
+          setState(() {
+            isVisible = !isVisible;
+          });
+
         return Future(() => false);
       },
       child: Scaffold(
@@ -120,106 +130,170 @@ class _BookFlightState extends State<BookFlight> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.only(top: 230),
-              child: FutureBuilder(
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: LoadingIndicator(
-                          indicatorType: Indicator.ballRotateChase,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    );
-                  } else {
-                    if (snapshot.hasError || data == null) {
-                      return Container(
-                        child: Text('Error Occured'),
-                      );
-                    } else {
-                      if (noFlight == 0) {
+            Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height - 230,
+                  margin: EdgeInsets.only(top: 230),
+                  child: FutureBuilder(
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
-                            child: Image.asset(
-                          'images/noflight.png',
-                          fit: BoxFit.fitWidth,
-                        ));
+                          child: SizedBox(
+                            height: 60,
+                            width: 60,
+                            child: LoadingIndicator(
+                              indicatorType: Indicator.ballRotateChase,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        );
                       } else {
-                        return ListView.builder(
-                            padding: EdgeInsets.all(5),
-                            itemCount: noFlight,
-                            itemBuilder: (context, index) {
-                              String price =
-                                  data['data'][index]['price']['total'];
-                              String carrierCode = data['data'][0]
-                                      ['itineraries'][0]['segments'][0]
-                                  ['carrierCode'];
-                              String airline = ' ';
-                              if (carrierCode == '9I')
-                                airline = 'ALLIANCE AIR';
-                              else if (carrierCode == 'UK')
-                                airline = 'VISTARA';
-                              else
-                                airline = 'AIR INDIA';
-                              var deptDateTime = data['data'][index]
+                        if (snapshot.hasError || data == null) {
+                          return Container(
+                            child: Text('Error Occured'),
+                          );
+                        } else {
+                          if (noFlight == 0) {
+                            return Center(
+                                child: Image.asset(
+                              'images/noflight.png',
+                              fit: BoxFit.fitWidth,
+                            ));
+                          } else {
+                            return ListView.builder(
+                                padding: EdgeInsets.all(5),
+                                itemCount: noFlight,
+                                itemBuilder: (context, index) {
+                                  String price =
+                                      data['data'][index]['price']['total'];
+                                  String carrierCode = data['data'][0]
                                           ['itineraries'][0]['segments'][0]
-                                      ['departure']['at']
-                                  .toString()
-                                  .split('T');
-                              String deptDate = deptDateTime[0].toString();
-                              String deptTime =
-                                  deptDateTime[1].toString().substring(0, 5);
-                              var destDateTime = data['data'][index]
-                                          ['itineraries'][0]['segments'][0]
-                                      ['arrival']['at']
-                                  .toString()
-                                  .split('T');
-                              String destDate = destDateTime[0].toString();
-                              String destTime =
-                                  destDateTime[1].toString().substring(0, 5);
-                              String stops = data['data'][index]['itineraries']
-                                      [0]['segments'][0]['numberOfStops']
-                                  .toString();
-                              if (stops == '0') {
-                                stops = 'Non-Stop';
-                              }
-                              return GestureDetector(
-                                onTap: () {
-                                  print('ticket Page');
-                                  Get.toNamed('/details', arguments: [
-                                    deptAirport,
-                                    destAirport,
-                                    trvlClass,
-                                    noPass,
-                                    noFlight,
-                                    data,
-                                    data['data'][index]
-                                  ]);
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.all(10),
-                                  child: FlightWidget(
-                                      stops: stops,
-                                      price: double.parse(price.toString()),
-                                      dept: deptAirport,
-                                      dest: destAirport,
-                                      airline: airline,
-                                      deptDate: deptDate,
-                                      destDate: destDate,
-                                      destTime: destTime,
-                                      deptTime: deptTime),
-                                ),
-                              );
-                            });
+                                      ['carrierCode'];
+                                  String airline = ' ';
+                                  if (carrierCode == '9I')
+                                    airline = 'ALLIANCE AIR';
+                                  else if (carrierCode == 'UK')
+                                    airline = 'VISTARA';
+                                  else
+                                    airline = 'AIR INDIA';
+                                  var deptDateTime = data['data'][index]
+                                              ['itineraries'][0]['segments'][0]
+                                          ['departure']['at']
+                                      .toString()
+                                      .split('T');
+                                  String deptDate = deptDateTime[0].toString();
+                                  String deptTime = deptDateTime[1]
+                                      .toString()
+                                      .substring(0, 5);
+                                  var destDateTime = data['data'][index]
+                                              ['itineraries'][0]['segments'][0]
+                                          ['arrival']['at']
+                                      .toString()
+                                      .split('T');
+                                  String destDate = destDateTime[0].toString();
+                                  String destTime = destDateTime[1]
+                                      .toString()
+                                      .substring(0, 5);
+                                  String stops = data['data'][index]
+                                              ['itineraries'][0]['segments'][0]
+                                          ['numberOfStops']
+                                      .toString();
+                                  if (stops == '0') {
+                                    stops = 'Non-Stop';
+                                  }
+                                  return GestureDetector(
+                                    onTap: () {
+                                      // print('ticket Page');
+                                      if (selectIndex != index) {
+                                        setState(() {
+                                          if (isVisible == false)
+                                            isVisible = !isVisible;
+                                          selectedPrice = price;
+                                          selectAirline = airline;
+                                          selectIndex = index;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          isVisible = !isVisible;
+                                        });
+                                      }
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.all(10),
+                                      child: FlightWidget(
+                                          stops: stops,
+                                          price: double.parse(price.toString()),
+                                          dept: deptAirport,
+                                          dest: destAirport,
+                                          airline: airline,
+                                          deptDate: deptDate,
+                                          destDate: destDate,
+                                          destTime: destTime,
+                                          deptTime: deptTime),
+                                    ),
+                                  );
+                                });
+                          }
+                        }
                       }
-                    }
-                  }
-                },
-                future: getData(),
+                    },
+                    future: getData(),
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              child: Visibility(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '$selectAirline',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffDAA210),
+                            fontSize: 20),
+                      ),
+                      Text('Rs. $selectedPrice',
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff4F755B),
+                              fontSize: 20)),
+                      TextButton(
+                          onPressed: () {
+                            Get.toNamed('/details', arguments: [
+                              deptAirport,
+                              destAirport,
+                              trvlClass,
+                              noPass,
+                              noFlight,
+                              data,
+                              data['data'][selectIndex]
+                            ]);
+                          },
+                          child: Text('BOOK',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff2F80ED),
+                                  fontSize: 20)))
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    color: Color(0xffF8FAFD),
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                ),
+                visible: isVisible,
+                maintainState: true,
               ),
             ),
           ],

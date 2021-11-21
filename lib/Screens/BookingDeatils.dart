@@ -34,17 +34,57 @@ class _BookingDetailState extends State<BookingDetail> {
         return Future(() => false);
       },
       child: Scaffold(
+          backgroundColor: Color(0xffF8FAFD),
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            backgroundColor: Color(0xffF8FAFD),
             title: Text(
-              'BOOKING DETAILS',
+              'Summary',
               style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff022541)),
             ),
           ),
-          body: Container()),
+          body: Container(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '$deptAirport',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffDAA210)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Image.asset('images/flighticon.png'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: Text(
+                        '$destAirport',
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Color(0xff4F755B)),
+                      ),
+                    ),
+                  ],
+                  
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

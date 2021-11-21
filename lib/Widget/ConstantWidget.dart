@@ -55,13 +55,7 @@ class FlightWidget extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.asset('images/line.png'),
-                  Image.asset('images/plane.png')
-                ],
-              ),
+              Image.asset('images/flighticon.png'),
               SizedBox(
                 width: 5,
               ),
