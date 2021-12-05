@@ -219,40 +219,12 @@ class _PredictionState extends State<Prediction> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          PricePredicted(
-                            title: 'Predicted Price',
-                            detail: predictedPrice.toString(),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          ConfirmationSlider(
-                            onConfirmation: () {
-                              Get.toNamed('/book', arguments: [
-                                arg[0],
-                                arg[1],
-                                arg[2],
-                                arg[3],
-                                arg[6],
-                                arg[7],
-                                arvDate,
-                                arvTime,
-                                predictedPrice
-                              ]);
-                            },
-                            backgroundColor: Color(0xffDAA210),
-                            backgroundColorEnd: Colors.yellowAccent,
-                            iconColor: Colors.yellowAccent,
-                            foregroundColor: Colors.yellow,
-                            text: "Slide to Book",
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w900),
-                          )
-                        ],
+                      PricePredicted(
+                        title: 'Predicted Price',
+                        detail: predictedPrice.toString(),
+                      ),
+                      SizedBox(
+                        height: 20,
                       )
                     ],
                   ),

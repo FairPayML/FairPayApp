@@ -12,11 +12,17 @@ class FlightWidget extends StatelessWidget {
     required this.destTime,
     required this.deptTime,
     required this.airline,
+    required this.duration,
+    required this.deptName,
+    required this.destName,
   });
 
   final String stops;
   final String dept;
   final String dest;
+  final String duration;
+  final String deptName;
+  final String destName;
   final String deptDate;
   final String destDate;
   final String destTime;
@@ -32,6 +38,7 @@ class FlightWidget extends StatelessWidget {
       stop = '1 stop';
     else
       stop = '$stops stops';
+
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -43,33 +50,63 @@ class FlightWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                '$dept',
+                style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xffDAA210)),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Expanded(child: Image.asset('images/flighticon.png')),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '$dest',
+                textAlign: TextAlign.right,
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Color(0xff4F755B)),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
               Expanded(
                 child: Text(
-                  '$dept',
+                  '$deptName',
+                  textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffDAA210)),
+                      fontWeight: FontWeight.w500, color: Color(0xffDAA210)),
                 ),
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Image.asset('images/flighticon.png'),
-              SizedBox(
-                width: 5,
+              Expanded(
+                child: Text(
+                  '$duration',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold, color: Color(0xff2F80ED)),
+                ),
               ),
               Expanded(
                 child: Text(
-                  '$dest',
+                  '$destName',
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Color(0xff4F755B)),
+                      fontWeight: FontWeight.w500, color: Color(0xff4F755B)),
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 15,
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -133,7 +170,7 @@ class FlightWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  'Rs.$price',
+                  'Rs.${price}0',
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
                       color: Color(0xff00C48C),

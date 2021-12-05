@@ -1,3 +1,5 @@
+import 'package:fairpay/Model/FlightModel.dart';
+import 'package:fairpay/Widget/ConstantWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -12,24 +14,29 @@ class BookingDetail extends StatefulWidget {
 class _BookingDetailState extends State<BookingDetail> {
   @override
   Widget build(BuildContext context) {
-    print('details Page');
     var arg = Get.arguments;
-    String deptAirport = arg[0];
-    String destAirport = arg[1];
-    String trvlClass = arg[2];
-    String noPass = arg[3];
-    int noFlight = arg[4];
-    var data = arg[5];
-    var detail = arg[6];
+    FlightModel flight = arg[0];
+    List<FlightModel> flights = arg[1];
+    String noPass = arg[2];
+    int noFlight = arg[3];
+    String trvlClass = arg[4];
+    int noAdult = arg[5];
+    int noChild = arg[6];
+    int noInfants = arg[7];
     return WillPopScope(
       onWillPop: () {
         Get.toNamed('/book', arguments: [
-          deptAirport,
-          destAirport,
+          flight.dept.toString(),
+          flight.dest.toString(),
           trvlClass,
           noPass,
           noFlight,
-          data
+          flights,
+          flight.deptName,
+          flight.destName,
+          noAdult,
+          noChild,
+          noInfants
         ]);
         return Future(() => false);
       },
@@ -40,7 +47,7 @@ class _BookingDetailState extends State<BookingDetail> {
             centerTitle: true,
             backgroundColor: Color(0xffF8FAFD),
             title: Text(
-              'Summary',
+              'BOOKING SUMMARY',
               style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -48,14 +55,16 @@ class _BookingDetailState extends State<BookingDetail> {
             ),
           ),
           body: Container(
+            margin: EdgeInsets.all(15),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
                       child: Text(
-                        '$deptAirport',
+                        '${flight.dept}',
                         style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -71,7 +80,7 @@ class _BookingDetailState extends State<BookingDetail> {
                     ),
                     Expanded(
                       child: Text(
-                        '$destAirport',
+                        '${flight.dest}',
                         textAlign: TextAlign.right,
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
@@ -80,11 +89,91 @@ class _BookingDetailState extends State<BookingDetail> {
                       ),
                     ),
                   ],
-                  
                 ),
+                Container(
+                  child: Column(
+                    children: [
+                      BookingDetails(
+                          title: 'Departure Name', detail: flight.deptName),
+                      SizedBox(height: 10),
+                      BookingDetails(
+                          title: 'Destination City', detail: flight.destName),
+                      SizedBox(height: 10),
+                      BookingDetails(title: 'Total Passenger', detail: noPass),
+                      SizedBox(height: 10),
+                      BookingDetails(
+                          title: 'Departure Date', detail: flight.deptDate),
+                      SizedBox(height: 10),
+                      BookingDetails(
+                          title: 'Destiantion Date', detail: flight.destDate),
+                      SizedBox(height: 10),
+                      BookingDetails(
+                          title: 'Departure Time', detail: flight.deptTime),
+                      SizedBox(height: 10),
+                      BookingDetails(
+                          title: 'Dastination Time', detail: flight.destTime),
+                      SizedBox(height: 10),
+                      BookingDetails(title: 'Airline', detail: flight.airline),
+                      SizedBox(height: 10),
+                      BookingDetails(
+                          title: 'Price', detail: 'Rs. ${flight.price}'),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/passenger',
+                        arguments: [noAdult, noChild, noInfants]);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 60,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        color: Color(0xffDAA210),
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Text(
+                      'Fill Passenger Details',
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Color(0xff022541),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           )),
+    );
+  }
+}
+
+class BookingDetails extends StatelessWidget {
+  const BookingDetails({required this.detail, required this.title});
+  final String title;
+  final String detail;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text('$title',
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xff4F755B))),
+        ),
+        Expanded(
+          child: Text('$detail',
+              textAlign: TextAlign.right,
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xffDAA210))),
+        ),
+      ],
     );
   }
 }

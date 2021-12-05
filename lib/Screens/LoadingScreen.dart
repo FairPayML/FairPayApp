@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fairpay/Model/FlightModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:fairpay/Networking/networkHelper.dart';
 import 'package:flutter/material.dart';
@@ -74,15 +75,26 @@ class _LoadingScreenState extends State<LoadingScreen> {
         headers: {"Authorization": "Bearer $token"});
     data = jsonDecode(res.body);
     int noFlight = data["meta"]["count"];
-
-    print('Number of Flight $noFlight');
+    List<FlightModel> flight = [];
+    if (noFlight > 0) {
+      final List flights = data['data'];
+      flight = flights
+          .map((json) =>
+              FlightModel.fromJson(json, dept, dest, deptAirport, destAirport))
+          .toList();
+    }
     Get.toNamed('/book', arguments: [
       deptAirport,
       destAirport,
       travelClass,
       noPass,
       noFlight,
-      data
+      flight,
+      dept,
+      dest,
+      noAdult,
+      noChild,
+      noInfants
     ]);
   }
 

@@ -18,13 +18,10 @@ class _BookingScreenState extends State<BookingScreen> {
   String? _source;
   String? _destination;
   String? airlines;
-  String? stops;
   DateTime departureDate = DateTime.now();
   DateTime arrivalDate = DateTime.now();
-  TimeOfDay departureTime = TimeOfDay.now();
-  TimeOfDay arrivalTime = TimeOfDay.now();
   String flgCls = 'Economy';
-  bool isNonStop = false;
+
   int _noPass = 0;
   int _noAdult = 0;
   int _noInfants = 0;
@@ -51,28 +48,9 @@ class _BookingScreenState extends State<BookingScreen> {
       });
   }
 
-  Future<void> _selectTime(BuildContext context, int select) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: select == 1 ? departureTime : arrivalTime,
-    );
-    if (pickedTime != null && pickedTime != departureTime) {
-      setState(() {
-        if (select == 1)
-          departureTime = pickedTime;
-        else
-          arrivalTime = pickedTime;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    MaterialLocalizations localizations = MaterialLocalizations.of(context);
     String deptDate = DateFormat('yyyy-MM-dd').format(departureDate);
-    String deptTime = localizations.formatTimeOfDay(departureTime,
-        alwaysUse24HourFormat: true);
-
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -103,14 +81,17 @@ class _BookingScreenState extends State<BookingScreen> {
                     hint: Text(
                       'Select Your Origin',
                       style: TextStyle(
-                          color: Colors.black.withOpacity(0.4), fontSize: 12),
+                          color: Colors.black.withOpacity(0.4), fontSize: 16),
                     ),
                     value: _source,
                     items: <String>['Delhi', 'Kolkata', 'Mumbai', 'Chennai']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 16),
+                        ),
                       );
                     }).toList(),
                     onChanged: (String? val) {
@@ -134,13 +115,13 @@ class _BookingScreenState extends State<BookingScreen> {
                     hint: Text('Select Your Destination',
                         style: TextStyle(
                             color: Colors.black.withOpacity(0.4),
-                            fontSize: 12)),
+                            fontSize: 18)),
                     value: _destination,
                     items: <String>['Cochin', 'Hyderabad', 'Kolkata']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value, style: TextStyle(fontSize: 16)),
                       );
                     }).toList(),
                     onChanged: (String? val) {
@@ -160,11 +141,12 @@ class _BookingScreenState extends State<BookingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       'Departure Date',
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -175,7 +157,12 @@ class _BookingScreenState extends State<BookingScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Image.asset('images/calendar.png'),
+                          Image.asset(
+                            'images/calendar.png',
+                            width: 24,
+                            height: 24,
+                            alignment: Alignment.centerLeft,
+                          ),
                           SizedBox(
                             width: 5,
                           ),
@@ -186,28 +173,6 @@ class _BookingScreenState extends State<BookingScreen> {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      'Departure Time',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _selectTime(context, 1);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.timer),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('$deptTime')
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ],
@@ -215,7 +180,7 @@ class _BookingScreenState extends State<BookingScreen> {
             Text(
               'Class',
               style: GoogleFonts.poppins(
-                fontSize: 14,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -376,7 +341,7 @@ class _BookingScreenState extends State<BookingScreen> {
             Text(
               'Passenger',
               style: GoogleFonts.poppins(
-                fontSize: 14,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -522,42 +487,8 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 50,
             ),
-            Text(
-              'No. of Stops',
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(left: 10, right: 20),
-              child: DropdownButton(
-                hint: Text(
-                  'Choose No. of Stops',
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.4), fontSize: 9),
-                ),
-                value: stops,
-                isExpanded: true,
-                items: <String>['Non-Stop', 'stops']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? val) {
-                  setState(() {
-                    stops = val;
-                  });
-                },
-                elevation: 2,
-              ),
-            ),
-            SizedBox(height: 10),
             GestureDetector(
               onTap: () {
                 String fligthClass = 'ECONOMY';
@@ -573,9 +504,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       snackPosition: SnackPosition.BOTTOM,
                       colorText: Colors.white,
                       backgroundColor: Color(0xff468A62));
-                } else if (_source != null &&
-                    _destination != null &&
-                    stops != null) {
+                } else if (_source != null && _destination != null) {
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       opaque: false,
