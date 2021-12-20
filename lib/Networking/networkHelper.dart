@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:fairpay/Model/FlightModel.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkHelper {
@@ -43,4 +46,62 @@ class NetworkHelper {
       print(res.statusCode);
     }
   }
+}
+
+void getData(String dept, String dest, String deptDate, int noAdult,
+    int noChild, int noInfants, String travelClass) async {
+  var data;
+  String noPass = '';
+  print(deptDate);
+  if (noAdult > 0) noPass = noPass + '$noAdult Adult ';
+  if (noChild > 0) noPass = noPass + '$noChild Child ';
+  if (noInfants > 0) noPass = noPass + '$noInfants Baby ';
+  String deptAirport = '';
+  String destAirport = '';
+  if (dept == 'Delhi')
+    deptAirport = 'DEL';
+  else if (dept == 'Kolkata')
+    deptAirport = 'CCU';
+  else if (dept == 'Mumbai')
+    deptAirport = 'BOM';
+  else
+    deptAirport = 'MAA';
+
+  if (dest == 'Cochin')
+    destAirport = 'COK';
+  else if (dest == 'Hyderabad')
+    destAirport = 'HYD';
+  else
+    destAirport = 'CCU';
+  NetworkHelper networkHelper = NetworkHelper();
+  var response = await networkHelper.getAccessToken();
+  String token = response["access_token"].toString();
+  var res = await http.get(
+      Uri.parse("https://test.api.amadeus.com/v2/shopping/flight-offers?"
+          "originLocationCode=$deptAirport&destinationLocationCode=$destAirport&departureDate=$deptDate"
+          "&adults=$noAdult&children=$noChild&infants=$noInfants&currencyCode=INR&travelClass=$travelClass"),
+      headers: {"Authorization": "Bearer $token"});
+  data = jsonDecode(res.body);
+  int noFlight = data["meta"]["count"];
+  List<FlightModel> flight = [];
+  if (noFlight > 0) {
+    final List flights = data['data'];
+    flight = flights
+        .map((json) =>
+            FlightModel.fromJson(json, dept, dest, deptAirport, destAirport))
+        .toList();
+  }
+  Get.toNamed('/book', arguments: [
+    deptAirport,
+    destAirport,
+    travelClass,
+    noPass,
+    noFlight,
+    flight,
+    dept,
+    dest,
+    noAdult,
+    noChild,
+    noInfants
+  ]);
 }

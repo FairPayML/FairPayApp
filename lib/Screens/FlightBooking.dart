@@ -579,5 +579,8 @@ class _BookingScreenState extends State<BookingScreen> {
         icons[1] = Icons.radio_button_unchecked;
       }
     });
+    setState(() {
+      flgCls;
+    });
   }
 }

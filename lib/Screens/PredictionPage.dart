@@ -3,7 +3,6 @@ import 'package:fairpay/Networking/networkHelper.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:get/get.dart';
-import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'package:fairpay/Widget/ConstantWidget.dart';
 
 class Prediction extends StatefulWidget {
