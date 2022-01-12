@@ -9,8 +9,7 @@ class BookFlight extends StatefulWidget {
   _BookFlightState createState() => _BookFlightState();
 }
 
-class _BookFlightState extends State<BookFlight>
-    with SingleTickerProviderStateMixin {
+class _BookFlightState extends State<BookFlight>{
   String selectAirline = ' ';
   String selectedPrice = ' ';
   int selectIndex = -1;

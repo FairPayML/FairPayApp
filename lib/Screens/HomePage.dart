@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:fairpay/Screens/FlightBooking.dart';
 import 'package:fairpay/Screens/MakePrediction.dart';
 import 'package:fairpay/Widget/ConstantWidget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
