@@ -140,6 +140,7 @@ class _PredictionState extends State<Prediction> {
   Widget build(BuildContext context) {
     var arg = Get.arguments;
     return Scaffold(
+      appBar: AppBar(title: Text("Prediction Result"),backgroundColor: Color(0xff468A62),),
       body: SafeArea(
         child: FutureBuilder(
           builder: (context, snapshot) {
